@@ -55,7 +55,7 @@ def main():
     data_proc = MultiDataProcessor([
         DataRangeNormalizer(),
         CenterNormalizer(params),
-        FinalPreparation(params, as_uint8=True),
+        FinalPreparation(params),
     ])
 
     print("Resolving files")

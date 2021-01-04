@@ -12,8 +12,9 @@ class CenterNormalizer(DataPreprocessor):
         super().__init__()
 
     def _apply_single(self, data):
+        data = data / 255.0
         out, params = self.normalize(data, cval=np.amax(data))
-        return out, params
+        return (out * 255).astype('uint8'), params
 
     def set_height(self, target_height):
         self.target_height = target_height

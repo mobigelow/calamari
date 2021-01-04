@@ -33,6 +33,8 @@ class VisCallback(keras.callbacks.Callback):
         self.iter_start_time = time.time()
         self.train_start_time = time.time()
 
+        self.it = iter(self.data_gen)
+
     def on_train_begin(self, logs):
         self.iter_start_time = time.time()
         self.train_start_time = time.time()
@@ -63,6 +65,5 @@ class VisCallback(keras.callbacks.Callback):
         pass
 
     def _generate(self, count):
-        it = iter(self.data_gen)
-        cer, target, decoded = zip(*[self.predict_func(next(it)) for _ in range(count)])
+        cer, target, decoded = zip(*[self.predict_func(next(self.it)) for _ in range(count)])
         return np.mean(cer), sum(map(sparse_to_lists, target), []), sum(map(sparse_to_lists, decoded), [])
